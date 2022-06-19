@@ -12,11 +12,13 @@ public class NewsEditController {
     @Autowired
     private NewsEditService newsEditService;
 
-    @PutMapping("/updateNews")
+    @PostMapping ("/updateNews")
     public RespBean updateNews(@RequestBody News news){
         System.out.println(news);
 
         try{
+            System.out.println("news id:" + news.getId());
+            System.out.println("news title:" + news.getTitle());
             newsEditService.updateNews(news);
             return RespBean.ok("修改成功",news);
         }catch (Exception e){
@@ -29,6 +31,8 @@ public class NewsEditController {
     public RespBean addNews(@RequestBody News news){
         System.out.println(news);
         try {
+            System.out.println("news id:" + news.getId());
+            System.out.println("news title:" + news.getTitle());
             newsEditService.addNews(news);
             return RespBean.ok("添加成功",news);
         }catch (Exception e){
@@ -37,10 +41,11 @@ public class NewsEditController {
         }
     }
 
-    @DeleteMapping("/deleteNews/{id}")
-    public RespBean deleteNews(@PathVariable int id){
+    @GetMapping("/removeNews")
+    public RespBean removeNews(int[] ids){
         try {
-            newsEditService.deleteNews(id);
+            System.out.println("news id:"+ids[0]);
+            newsEditService.removeNews(ids);
             return RespBean.ok("删除成功");
         } catch (Exception e) {
             e.printStackTrace();

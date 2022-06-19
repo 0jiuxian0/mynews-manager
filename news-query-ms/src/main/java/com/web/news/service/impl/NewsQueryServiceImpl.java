@@ -18,13 +18,24 @@ public class NewsQueryServiceImpl implements NewsQueryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<News> queryNews() {
+    public List<News> findAllNews() {
         return newsMapper.selectByExample(null);
     }
 
     @Override
-    public List<News> queryNews(News news) {
-        return newsMapper.selectByExample(null);
+    public List<News> findNewsByCondition(News news) {
+        NewsExample example = new NewsExample();
+        NewsExample.Criteria criteria = example.createCriteria();
+        if (news!=null){
+            if (news.getCategoryid()!=0) {
+                criteria.andCategoryidEqualTo(news.getCategoryid());
+            }
+            if (news.getTitle()!=null && !"".equals(news.getTitle())) {
+                criteria.andTitleLike("%" + news.getTitle() + "%");
+            }
+        }
+        List<News> list = newsMapper.selectByExample(example);
+        return list;
     }
 
     @Override
@@ -33,7 +44,7 @@ public class NewsQueryServiceImpl implements NewsQueryService {
     }
 
     @Override
-    public News findNewsById(int id) {
+    public News findNewsById(Integer id) {
         return newsMapper.selectByPrimaryKey(id);
     }
 }

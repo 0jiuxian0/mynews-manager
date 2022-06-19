@@ -11,13 +11,13 @@ public interface NewsQueryService {
      * 查询所有新闻列表
      * @return
      */
-    public List<News> queryNews();
+    public List<News> findAllNews();
     /**
      * 根据新闻分类和标题查询新闻列表
      * @param news
      * @return
      */
-    public List<News> queryNews(News news);
+    public List<News> findNewsByCondition(News news);
     /**
      * 查询所有新闻类别
      * @return
@@ -27,5 +27,5 @@ public interface NewsQueryService {
      * 根据唯一标识查询单条新闻
      * @return
      */
-    public News findNewsById(int id);
+    public News findNewsById(Integer id);
 }
